@@ -1,0 +1,19 @@
+.head{
+    text-decoration: none;
+   
+  }
+   
+  .card-body{
+    color: black;
+  }
+  .card {
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  
+  .card:hover {
+    background-color: rgb(204, 204, 204); /* Update to the desired hover color */
+  }
+  .nav-link:hover{
+    transform: scale(1.05);
+  }
