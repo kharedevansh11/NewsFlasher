@@ -5,7 +5,6 @@ import Spinner from './Spinner';
 import PropTypes from 'prop-types'
 import "./style.css"
 import InfiniteScroll from "react-infinite-scroll-component";
-
 const News = (props)=>{
     const [articles, setArticles] = useState([])
     const [loading, setLoading] = useState(true)
