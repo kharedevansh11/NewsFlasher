@@ -14,6 +14,7 @@ const App = () => {
 
   return (
     <div>
+      
       <Router>
         <LoadingBar color="#f11946" progress={progress} />
         <NavBar name="NewsFlash" />
