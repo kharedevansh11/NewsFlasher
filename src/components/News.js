@@ -17,34 +17,53 @@ const News = (props)=>{
 
     const updateNews = async ()=> {
         props.setProgress(20);
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=1e351bb98f3d461f9ab075339bdf232c&page=${page}&pageSize=${props.pageSize}`; 
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=${props.category}&apiKey=bb264b32cf3442c59aaaf44422e95331&page=${page}&pageSize=${props.pageSize}`; 
         setLoading(true)
 
-        let data = await fetch(url);
-        props.setProgress(70);
-        let parsedData = await data.json()
-        setArticles(parsedData.articles)
-        setTotalResults(parsedData.totalResults)
+        try {
+            let data = await fetch(url);
+            props.setProgress(70);
+            let parsedData = await data.json();
+            console.log("API Response:", parsedData);
+            
+            if (parsedData.status === "ok") {
+                setArticles(parsedData.articles);
+                setTotalResults(parsedData.totalResults);
+            } else {
+                console.error("API Error:", parsedData.message);
+            }
+        } catch (error) {
+            console.error("Error fetching news:", error);
+        }
+        
         props.setProgress(100);
-        setLoading(false)
-       
+        setLoading(false);
     }
 
     useEffect(() => {
         document.title = `${capitalizeFirstLetter(props.category)} - NewsFlash`;
         updateNews(); 
-        // eslint-disable-next-line
-    }, [])
+    }, [props.category])
 
 
     const fetchMoreData = async () => {   
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=1e351bb98f3d461f9ab075339bdf232c&page=${page+1}&pageSize=${props.pageSize}`;
-        setPage(page+1) 
-        let data = await fetch(url);
-        let parsedData = await data.json()
-        setArticles(articles.concat(parsedData.articles))
-        setTotalResults(parsedData.totalResults)
-      };
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=${props.category}&apiKey=bb264b32cf3442c59aaaf44422e95331&page=${page+1}&pageSize=${props.pageSize}`;
+        setPage(page+1);
+        
+        try {
+            let data = await fetch(url);
+            let parsedData = await data.json();
+            
+            if (parsedData.status === "ok") {
+                setArticles(articles.concat(parsedData.articles));
+                setTotalResults(parsedData.totalResults);
+            } else {
+                console.error("API Error:", parsedData.message);
+            }
+        } catch (error) {
+            console.error("Error fetching more data:", error);
+        }
+    };
  
         return (
             <>
